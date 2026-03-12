@@ -14,7 +14,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage, AIMessage
 from langgraph.graph import StateGraph, END
 
-from cost_tracker import SessionCostTracker
+from cost_tracker import SessionCostTracker, calculate_cost
 
 # Load .env from project root (works regardless of cwd)
 _env_path = Path(__file__).resolve().parent / ".env"

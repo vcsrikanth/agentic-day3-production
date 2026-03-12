@@ -1,5 +1,7 @@
 """Session cost tracker for LLM token usage."""
 
+__all__ = ["calculate_cost", "SessionCostTracker"]
+
 from dataclasses import dataclass
 import json
 import logging
@@ -24,8 +26,8 @@ def calculate_cost(model: str, input_tokens: int, output_tokens: int) -> float:
 class SessionCostTracker:
     session_id: str
     model: str = "gpt-4o-mini"
-    budget_usd: float = 0.50
-    total_cost_usd: float = 0.0
+    budget_usd: float = 1.50
+    total_cost_usd: float = 1.0
     call_count: int = 0
 
     def log_call(
