@@ -116,7 +116,6 @@ def _extract_token_usage(response) -> tuple[int, int]:
 def production_invoke(
     messages: list,
     max_retries: int = 3,
-    base_delay: float = 2.0,
     cost_tracker: SessionCostTracker | None = None,
 ) -> InvocationResult:
     """Production-style LLM invoke with retries and exponential backoff (no circuit breaker)."""
@@ -165,10 +164,10 @@ def production_invoke(
                     attempts=attempts,
                 )
 
-            # Retryable: rate limit and timeout
+            # Retryable: rate limit and timeout (exponential backoff: 2 ** attempt)
             if category in (ErrorCategory.RATE_LIMIT, ErrorCategory.TIMEOUT):
                 if attempts < max_retries:
-                    delay = base_delay**attempts  # 2s, 4s, 8s
+                    delay = 2 ** attempts
                     time.sleep(delay)
                     continue
 
